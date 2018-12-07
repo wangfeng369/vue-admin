@@ -6,13 +6,13 @@
 <template>
     <div class="image-editor">
         <Row :gutter="10">
-            <Col span="12">
+            <Col span="24">
                 <Card>
                     <p slot="title">
                         <Icon type="qr-scanner"></Icon>
-                        基础实例
+                        上传图片
                     </p>
-                    <Row :gutter="10">
+                    <Row :gutter="9">
                         <Col span="14" class="image-editor-con1">
                             <div class="cropper">
                                 <img id="cropimg1" alt="">
@@ -35,7 +35,7 @@
                     </Row>
                 </Card>
             </Col>
-            <Col span="12">
+            <!-- <Col span="12">
                 <Card>
                     <p slot="title">
                         <Icon type="android-options"></Icon>
@@ -68,9 +68,9 @@
                         </Col>
                     </Row>
                 </Card>
-            </Col>
+            </Col> -->
         </Row>
-        <Row class="margin-top-10">
+        <!-- <Row class="margin-top-10">
             <Card>
                 <p slot="title">
                     <Icon type="levels"></Icon>
@@ -154,7 +154,7 @@
                     </Col>
                 </Row>
             </Card>
-        </Row>
+        </Row> -->
     </div>
 </template>
 
