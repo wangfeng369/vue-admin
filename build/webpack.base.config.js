@@ -77,10 +77,10 @@ module.exports = {
                 test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
                 loader: 'url-loader?limit=1024'
             },
-            {
-                test: /\.(html|tpl|ejs)$/,
-                loader: 'html-loader'
-            }
+            // {
+            //     test: /\.(html|tpl|ejs)$/,
+            //     loader: 'html-loader'
+            // }
         ]
     },
     plugins: [

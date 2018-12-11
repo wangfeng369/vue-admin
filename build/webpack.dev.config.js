@@ -29,7 +29,7 @@ module.exports = merge(webpackBaseConfig, {
             minChunks: Infinity
         }),
         new HtmlWebpackPlugin({
-            title: 'W admin v' + package.version,
+            title: 'iView admin v' + package.version,
             filename: '../index.html',
             template: './src/template/index.ejs',
             inject: false

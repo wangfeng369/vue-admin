@@ -196,11 +196,13 @@ export default {
                 reader.onload = null;
             };
             reader.readAsDataURL(file);
+            this.$emit('getOldPic',file)
         },
         handlecrop1 () {
             let file = this.cropper1.getCroppedCanvas().toDataURL();
             this.option1.cropedImg = file;
             this.option1.showCropedImage = true;
+            this.$emit('getPic',file)
         },
         handlerotatel () {
             if (document.getElementById('fileinput3').files[0]) {

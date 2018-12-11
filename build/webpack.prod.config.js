@@ -18,7 +18,7 @@ fs.open('./build/env.js', 'w', function(err, fd) {
 
 module.exports = merge(webpackBaseConfig, {
     output: {
-        publicPath: 'http://120.79.213.80/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名 
+        publicPath: 'http://120.79.213.80:1000/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名 
         filename: '[name].[hash].js',
         chunkFilename: '[name].[hash].chunk.js'
     },
@@ -75,7 +75,7 @@ module.exports = merge(webpackBaseConfig, {
             ]
         }),
         new HtmlWebpackPlugin({
-            title: 'W admin v' + package.version,
+            title: 'iView admin v' + package.version,
             favicon: './td_icon.ico',
             filename: '../index.html',
             template: './src/template/index.ejs',

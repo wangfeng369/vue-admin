@@ -43,7 +43,7 @@ export default {
     data () {
         return {
             form: {
-                userName: 'iview_admin',
+                userName: '',
                 password: ''
             },
             rules: {
@@ -60,19 +60,42 @@ export default {
         handleSubmit () {
             this.$refs.loginForm.validate((valid) => {
                 if (valid) {
-                    Cookies.set('user', this.form.userName);
-                    Cookies.set('password', this.form.password);
-                    this.$store.commit('setAvator', 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg');
-                    if (this.form.userName === 'iview_admin') {
-                        Cookies.set('access', 0);
-                    } else {
-                        Cookies.set('access', 1);
-                    }
-                    this.$router.push({
-                        name: 'home_index'
-                    });
+                //     Cookies.set('user', this.form.userName);
+                //     Cookies.set('password', this.form.password);
+                //     this.$store.commit('setAvator', 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg');
+                //     if (this.form.userName === 'iview_admin') {
+                //         Cookies.set('access', 0);
+                //     } else {
+                //         Cookies.set('access', 1);
+                //     }
+                //     this.$router.push({
+                //         name: 'home_index'
+                //     });
+                    let _this = this
+                    let userName = _this.form.userName
+                    let password = _this.form.password
+                    console.log(userName)
+                    _this.$axios.post(_this.apiUrl+'/user/login',
+                        {userName:userName,password:password}, 
+                        {'Content-Type': 'application/json'})
+                        .then(function (response) {
+                            if(!response.data.sucess){
+                                alert(response.data.info)
+                                return;
+                            }
+                            sessionStorage.setItem('token',response.data.token);
+                            console.log(response.data.name)
+                            sessionStorage.setItem('username',response.data.name)
+                            _this.$router.push({
+                                 name: 'home_index'
+                        });
+                        
+                        })
+                    .catch(function (error) {});
                 }
+             
             });
+            
         }
     }
 };

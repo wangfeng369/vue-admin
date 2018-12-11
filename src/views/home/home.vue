@@ -12,7 +12,7 @@
                             <Row type="flex" class="user-infor">
                                 <Col span="8">
                                     <Row class-name="made-child-con-middle" type="flex" align="middle">
-                                        <img class="avator-img" :src="avatorPath" />
+                                        <img class="avator-img" src='https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg' />
                                     </Row>
                                 </Col>
                                 <Col span="16" style="padding-left:6px;">
