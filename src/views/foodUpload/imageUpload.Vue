@@ -7,7 +7,7 @@
                 上传图片
             </p>
             <Row :gutter="12">
-                <div class="demo-upload-list" v-for="(item,index) in uploadList">
+                <div class="demo-upload-list" v-for="(item,index) in defaultList">
                     <template v-if="item">
                         <img :src="item.url">
                         <div class="demo-upload-list-cover">
@@ -37,12 +37,14 @@
 </template>
 <script>
     export default {
+        props:['changePic'],
         data() {
             return {
                 defaultList: [],
                 imgName: '',
                 visible: false,
-                uploadList: []
+                uploadList: [],
+                url:''
             }
         },
         methods: {
@@ -52,6 +54,7 @@
             },
             handleRemove(index) {
                 this.uploadList.splice(index,1);
+                this.defaultList.splice(index,1)
                 console.log(this.uploadList)
             },
             handleSuccess(res, file) {
@@ -99,13 +102,29 @@
                 reader.onloadend = function (e) {
                     file.url = reader.result
                     _this.uploadList.push(file)
-                      _this.$emit('getPic',_this.uploadList)
-                      console.log('~~'+file)
-                      console.log('!!!!'+_this.uploadList)
+                    _this.$emit('getPic',_this.uploadList)
+                    _this.defaultList.push(file)
                 }   
               
                 return false;
             },
+        },
+        watch:{
+            changePic(val){
+                let _this = this
+                console.log('~~~~'+val)
+                _this.$nextTick(function(){
+                    let spiltVal = val.split(',')
+                       console.log(spiltVal)
+                    for(let i=0;i<spiltVal.length;i++){
+                        let obj = {}
+                        obj.url = _this.imgUrl+spiltVal[i]
+                        _this.defaultList.push(obj)
+                        console.log(_this.defaultList)
+                    }
+                  
+                })
+            }
         },
         mounted() {}
     }
