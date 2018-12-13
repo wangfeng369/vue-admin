@@ -16,7 +16,8 @@ import axios from 'axios'
 Vue.use(VueI18n);
 Vue.use(iView);
 Vue.prototype.$axios = axios;
-const debug = false
+Vue.prototype.imgUrl = 'http://120.79.213.80:1000/images/'
+const debug = true
 Vue.prototype.apiUrl = debug ? 'http://localhost:8888' : 'http://120.79.213.80:8888';
 
 

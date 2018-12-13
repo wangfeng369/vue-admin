@@ -12,13 +12,20 @@
                         <Icon type="qr-scanner"></Icon>
                         上传图片
                     </p>
-                    <Row :gutter="9">
-                        <Col span="14" class="image-editor-con1">
-                            <div class="cropper">
-                                <img id="cropimg1" alt="">
-                            </div>
+                    <Row :gutter="12">
+                        <Col span="24" style="margin-bottom:10px;">
+                            <input type="file" accept="image/png, image/jpeg, image/gif, image/jpg" @change="handleChange1" multiple id="fileinput1" class="fileinput" />
+                            <label class="filelabel" for="fileinput1"><Icon type="image"></Icon>&nbsp;选择图片</label>   
                         </Col>
-                        <Col span="10" class="image-editor-con1">
+                        <Col span="12" class="image-editor-con1">
+                            <div class="cropper" v-for='item in picItems' :key="item">
+                                <img id="cropimg1" alt="" :src="item" v-if="pic">
+                             
+                            </div>
+                           
+                        </Col>
+                      
+                        <!-- <Col span="10" class="image-editor-con1">
                             <Row type="flex" justify="center" align="middle" class="image-editor-con1-preview-con">
                                 <div id="preview1"></div>
                             </Row>
@@ -31,7 +38,7 @@
                                 <p slot="header">预览裁剪之后的图片</p>
                                 <img :src="option1.cropedImg" alt="" v-if="option1.showCropedImage" style="width: 100%;">
                             </Modal>
-                        </Col>
+                        </Col> -->
                     </Row>
                 </Card>
             </Col>
@@ -163,9 +170,12 @@ import Cropper from 'cropperjs';
 import './cropper.min.css';
 export default {
     name: 'image-editor',
+    props:['changePic'],
     data () {
         return {
+            pic:'',
             cropper1: {},
+            picItems:[],
             option1: {
                 showCropedImage: false,
                 cropedImg: ''
@@ -192,7 +202,8 @@ export default {
             let file = e.target.files[0];
             let reader = new FileReader();
             reader.onload = () => {
-                this.cropper1.replace(reader.result);
+                // this.cropper1.replace(reader.result);
+                this.pic = reader.result
                 reader.onload = null;
             };
             reader.readAsDataURL(file);
@@ -269,17 +280,26 @@ export default {
             this.option3.showCropedImage = true;
         }
     },
+    watch:{
+        changePic(val){
+            let _this = this
+            _this.$nextTick(function(){
+                _this.pic = _this.imgUrl+val
+        })
+        }
+    },
     mounted () {
+   
         let img1 = document.getElementById('cropimg1');
-        this.cropper1 = new Cropper(img1, {
-            dragMode: 'move',
-            preview: '#preview1',
-            restore: false,
-            center: false,
-            highlight: false,
-            cropBoxMovable: false,
-            toggleDragModeOnDblclick: false
-        });
+        // this.cropper1 = new Cropper(img1, {
+        //     dragMode: 'move',
+        //     preview: '#preview1',
+        //     restore: false,
+        //     center: false,
+        //     highlight: false,
+        //     cropBoxMovable: false,
+        //     toggleDragModeOnDblclick: false
+        // });
 
         let img2 = document.getElementById('cropimg2');
         this.cropper2 = new Cropper(img2, {
@@ -310,7 +330,8 @@ export default {
             cropBoxMovable: false,
             toggleDragModeOnDblclick: false
         });
-    }
+    },
+  
 };
 </script>
 

@@ -60,21 +60,31 @@ export const otherRouter = {
         { path: 'ownspace', title: '个人中心', name: 'ownspace_index', component: resolve => { require(['@/views/own-space/own-space.vue'], resolve); } },
         { path: 'order/:order_id', title: '订单详情', name: 'order-info', component: resolve => { require(['@/views/advanced-router/component/order-info.vue'], resolve); } }, // 用于展示动态路由
         { path: 'shopping', title: '购物详情', name: 'shopping', component: resolve => { require(['@/views/advanced-router/component/shopping-info.vue'], resolve); } }, // 用于展示带参路由
-        { path: 'message', title: '消息中心', name: 'message_index', component: resolve => { require(['@/views/message/message.vue'], resolve); } }
+        { path: 'message', title: '消息中心', name: 'message_index', component: resolve => { require(['@/views/message/message.vue'], resolve); } },
+        { path: 'foodUpload', title: {i18n: '新增商品详情'}, name: 'upload_index', component: resolve => { require(['@/views/foodUpload/foodUpload.vue'], resolve); } },
+        { path: 'foodUpload', title: {i18n: '修改商品详情'}, name: 'change_detail', component: resolve => { require(['@/views/foodUpload/foodUpload.vue'], resolve); } }
     ]
 };
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
     {
-        path: '/foodUpload',
+        path: '/tableDetail',
         icon: 'earth',
-        title: {i18n: '上传商品详情'},
-        name: 'foodUpload',
+        title: {i18n: '商品列表'},
+        name: 'tableDetail',
         component: Main,
         children: [
-            { path: 'index', title: {i18n: '上传商品详情'}, name: 'international_index', component: resolve => { require(['@/views/foodUpload/foodUpload.vue'], resolve); } }
+            { path: 'index', title: {i18n: '商品列表'}, name: 'table_index', component: resolve => { require(['@/views/items/tableDetail.vue'], resolve); } }
         ]
+        // path: '/foodUpload',
+        // icon: 'earth',
+        // title: {i18n: '上传商品详情'},
+        // name: 'foodUpload',
+        // component: Main,
+        // children: [
+        //     { path: 'index', title: {i18n: '上传商品详情'}, name: 'international_index', component: resolve => { require(['@/views/foodUpload/foodUpload.vue'], resolve); } }
+        // ]
     }
     // {
     //     path: '/access',
