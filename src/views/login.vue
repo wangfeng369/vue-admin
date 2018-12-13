@@ -39,6 +39,7 @@
 
 <script>
 import Cookies from 'js-cookie';
+ import crypto from 'crypto';
 export default {
     data () {
         return {
@@ -73,8 +74,10 @@ export default {
                 //     });
                     let _this = this
                     let userName = _this.form.userName
-                    let password = _this.form.password
-                    console.log(userName)
+                    let  md5 = crypto.createHash("md5");
+                    md5.update(_this.form.password) //需要加密的密码
+                    let password = md5.digest('hex');  //password 加密完的密码
+                    console.log(password);
                     _this.$axios.post(_this.apiUrl+'/user/login',
                         {userName:userName,password:password}, 
                         {'Content-Type': 'application/json'})
