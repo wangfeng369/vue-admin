@@ -13,9 +13,9 @@
 		<Row>
 			<Col span="12">
 			<Card>
-				<Form :label-width="100">
-					<FormItem label="商品一级分类">
-						<AutoComplete v-model="typeName" :filter-method="filterMethod1" placeholder="input here" style="width:200px"
+				<Form :label-width="100" ref="formInline" :rules="ruleInline" :model="formInline">
+					<FormItem label="商品一级分类" prop="typeName">
+						<AutoComplete v-model="formInline.typeName" :filter-method="filterMethod1" placeholder="input here" style="width:200px"
 						 :disabled="isAdd">
 							<div class="demo-auto-complete-item">
 								<Option v-for="option in options1" :value="option.name" :key="option.id">
@@ -23,8 +23,8 @@
 							</div>
 						</AutoComplete>
 					</FormItem>
-					<FormItem label="商品二级分类">
-						<AutoComplete v-model="productsName" :filter-method="filterMethod2" placeholder="input here" style="width:200px"
+					<FormItem label="商品二级分类" prop="productsName">
+						<AutoComplete v-model="formInline.productsName" :filter-method="filterMethod2" placeholder="input here" style="width:200px"
 						 :disabled="isAdd">
 							<div class="demo-auto-complete-item">
 								<Option v-for="option in options2" :value="option.productName" :key="option.id">
@@ -32,8 +32,8 @@
 							</div>
 						</AutoComplete>
 					</FormItem>
-					<FormItem label="商品三级分类">
-						<AutoComplete v-model="categoryName" :filter-method="filterMethod3" placeholder="input here" style="width:200px"
+					<FormItem label="商品三级分类" prop="categoryName">
+						<AutoComplete v-model="formInline.categoryName" :filter-method="filterMethod3" placeholder="input here" style="width:200px"
 						 :disabled="isAdd">
 							<div class="demo-auto-complete-item">
 								<Option v-for="option in options3" :value="option.name" :key="option.id">
@@ -41,43 +41,43 @@
 							</div>
 						</AutoComplete>
 					</FormItem>
-					<FormItem label="商品名称">
-						<Input v-model="foodName" @on-blur="handleArticletitleBlur" icon="android-list" />
+					<FormItem label="商品名称" prop="foodName">
+						<Input v-model="formInline.foodName" icon="android-list" />
 					</FormItem>
-					<FormItem label="英文名称">
-						<Input v-model="foodEnName" icon="android-list" />
+					<FormItem label="英文名称" prop="foodEnName">
+						<Input v-model="formInline.foodEnName" icon="android-list" />
 					</FormItem>
-					<FormItem label="价格">
-						<Input v-model="price" @on-blur="priceBlur" icon="android-list" />
+					<FormItem label="价格" prop="price">
+						<Input v-model="formInline.price" icon="android-list" />
 					</FormItem>
-					<FormItem label="条形码">
-						<Input v-model="foodCode" @on-blur="tiaoxingmaBlur" icon="android-list" />
+					<FormItem label="条形码" prop="foodCode">
+						<Input v-model="formInline.foodCode" icon="android-list" />
 					</FormItem>
-					<FormItem label="规格">
-						<Input v-model="foodSize" @on-blur="guigeBlur" icon="android-list" />
+					<FormItem label="规格" prop="foodSize">
+						<Input v-model="formInline.foodSize" icon="android-list" />
 					</FormItem>
-					<FormItem label="保质期">
-						<Input v-model="deadLine" @on-blur="baozhiqiBlur" icon="android-list" />
+					<FormItem label="保质期" prop="deadLine">
+						<Input v-model="formInline.deadLine" icon="android-list" />
 					</FormItem>
-					<FormItem label="产地">
-						<Input v-model="palce" @on-blur="changdiBlur" icon="android-list" />
+					<FormItem label="产地" prop="palce">
+						<Input v-model="formInline.palce" icon="android-list" />
 					</FormItem>
-					<FormItem label="商品描述">
-						<Input v-model="detail" type="textarea" @on-blur="detailBlur" icon="android-list" />
+					<FormItem label="商品描述" prop="detail">
+						<Input v-model="formInline.detail" type="textarea" icon="android-list" />
 					</FormItem>
 				</Form>
+					<Col span="24">
+					<Button type="primary" :loading="loading" @click="uploadDetail('formInline')" style="margin:20px auto;display: inherit;width:100px;">
+						<span v-if="!loading">提交</span>
+						<span v-else>Loading...</span>
+					</Button>
+					</Col>
 			</Card>
-
 			</Col>
 			<Col span="12">
-				<imageCroper @getPic="getPic" @getOldPic="getOldPic" :changePic='pic'></imageCroper>
+			<imageCroper @getPic="getPic" @getOldPic="getOldPic" :changePic='pic'></imageCroper>
 			</Col>
-			<Col span="24">
-			<Button type="primary" :loading="loading" @click="uploadDetail" style="margin:20px auto;display: inherit;width:100px;">
-				<span v-if="!loading">提交</span>
-				<span v-else>Loading...</span>
-			</Button>
-			</Col>
+		
 
 		</Row>
 	</div>
@@ -89,19 +89,21 @@
 		name: "artical-publish",
 		data() {
 			return {
-				foodName: "",
-				price: '',
-				detail: '',
-				articleError: "",
-				foodCode: "",
-				foodEnName: '',
-				foodSize: "",
-				deadLine: "",
-				palce: "",
+				formInline: {
+					foodName: "",
+					price: '',
+					detail: '',
+					articleError: "",
+					foodCode: "",
+					foodEnName: '',
+					foodSize: "",
+					deadLine: "",
+					palce: "",
+					typeName: '',
+					productsName: '',
+					categoryName: '',
+				},
 				loading: false,
-				typeName: '',
-				productsName: '',
-				categoryName: '',
 				options1: [],
 				options2: [],
 				options3: [],
@@ -112,48 +114,107 @@
 				list1: [],
 				list2: [],
 				list3: [],
-				isAdd: false
+				isAdd: false,
+				ruleInline: {
+					foodName: [{
+						required: true,
+						message: '请填写商品名称',
+						trigger: 'blur'
+					}],
+					foodEnName: [{
+						required: true,
+						message: '请填写英文商品名称.',
+						trigger: 'blur'
+					}, ],
+					typeName: [{
+						required: true,
+						message: '请填写一级分类',
+						trigger: 'blur'
+					}],
+					productsName: [{
+						required: true,
+						message: '请填写二级分类',
+						trigger: 'blur'
+					}],
+					categoryName: [{
+						required: true,
+						message: '请填写三级分类',
+						trigger: 'blur'
+					}],
+					price: [{
+						required: true,
+						message: '请填写价格',
+						trigger: 'blur'
+					}],
+					foodCode: [{
+						required: true,
+						message: '请填写条形码',
+						trigger: 'blur'
+					}],
+					foodSize: [{
+						required: true,
+						message: '请填写规格',
+						trigger: 'blur'
+					}],
+					deadLine: [{
+						required: true,
+						message: '请填写保质期',
+						trigger: 'blur'
+					}],
+					palce: [{
+						required: true,
+						message: '请填写产地',
+						trigger: 'blur'
+					}],
+					detail: [{
+						required: true,
+						message: '请填写商品描述',
+						trigger: 'blur'
+					}],
+
+				}
 			};
 		},
+
 		components: {
 			imageCroper: imageCroper
 		},
 		methods: {
-			handleArticletitleBlur() {
-				if (this.foodName.length !== 0) {} else {
-					this.$Message.error("商品名称不可为空哦");
-				}
-			},
-			tiaoxingmaBlur() {
-				if (this.foodCode.length !== 0) {} else {
-					this.$Message.error("条形码不可为空哦");
-				}
-			},
-			guigeBlur() {
-				if (this.foodCode.length !== 0) {} else {
-					this.$Message.error("规格不可为空哦");
-				}
-			},
-			baozhiqiBlur() {
-				if (this.deadLine.length !== 0) {} else {
-					this.$Message.error("保质期不可为空哦");
-				}
-			},
-			changdiBlur() {
-				if (this.palce.length !== 0) {} else {
-					this.$Message.error("产地不可为空哦");
-				}
-			},
-			priceBlur() {
-				if (this.price.length !== 0) {} else {
-					this.$Message.error("价格不可为空哦");
-				}
-			},
-			detailBlur() {
-				if (this.detail.length !== 0) {} else {
-					this.$Message.error("描述不可为空哦");
-				}
-			},
+			// handleArticletitleBlur() {
+			// 	if (this.foodName.length !== 0) {} else {
+			// 		this.$Message.error("商品名称不可为空哦");
+			// 	}
+			// },
+			// tiaoxingmaBlur() {
+			// 	if (this.foodCode.length !== 0) {} else {
+			// 		this.$Message.error("条形码不可为空哦");
+			// 	}
+			// },
+			// guigeBlur() {
+			// 	if (this.foodCode.length !== 0) {} else {
+			// 		this.$Message.error("规格不可为空哦");
+			// 	}
+			// },
+			// baozhiqiBlur() {
+			// 	if (this.deadLine.length !== 0) {} else {
+			// 		this.$Message.error("保质期不可为空哦");
+			// 	}
+			// },
+			// changdiBlur() {
+			// 	if (this.palce.length !== 0) {} else {
+			// 		this.$Message.error("产地不可为空哦");
+			// 	}
+			// },
+			// priceBlur() {
+			// 	if (this.price.length !== 0) {} else {
+			// 		this.$Message.error("价格不可为空哦");
+			// 	}
+			// },
+			// detailBlur() {
+			// 	if (this.detail.length !== 0) {} else {
+			// 		this.$Message.error("描述不可为空哦");
+			// 	}
+			// },
 			toLoading() {
 
 			},
@@ -169,7 +230,7 @@
 			getPic: function (data) {
 				let _this = this
 				_this.pic = data
-				console.log('~~~~'+data)
+				console.log('~~~~' + data)
 				console.log(_this.pic)
 			},
 			getOldPic: function (data) {
@@ -177,68 +238,74 @@
 				_this.pic = data
 				console.log(_this.pic)
 			},
-			uploadDetail: function () {
+			uploadDetail: function (name) {
 				let _this = this
-				_this.loading = true;
-				let detailId = _this.$route.params.id
-				if (detailId == undefined) {
-					detailId = ''
-				}
-				let foodName = _this.foodName
-				let foodCode = _this.foodCode
-				let foodEnName = _this.foodEnName
-				let foodSize = _this.foodSize
-				let deadLine = _this.deadLine
-				let palce = _this.palce
-				let pic = _this.pic
-				let price = _this.price
-				let detail = _this.detail
-				let categoryName = _this.categoryName
-				let productsName = _this.productsName
-				let typeName = _this.typeName
-				let formData = new FormData();
-				for(let i =0;i <_this.pic.length;i++){
-					formData.append('files', _this.pic[i])
-				}
-				formData.append('id', detailId)
-			
-				formData.append('foodName', foodName)
-				formData.append('foodCode', foodCode)
-				formData.append('foodEnName', foodEnName)
-				formData.append('foodSize', foodSize)
-				formData.append('deadLine', deadLine)
-				formData.append('categoryName', categoryName)
-				formData.append('productsName', productsName)
-				formData.append('typeName', typeName)
-				formData.append('palce', palce)
-				formData.append('price', price)
-				formData.append('detail', detail)
-				formData.forEach(function (item) {
-					console.log(item)
-				})
-
-				_this.$axios.post(_this.apiUrl + '/article/uploadDetail', formData, {
-						headers: {
-							'Content-Type': 'multipart/form-data'
+				this.$refs[name].validate((valid) => {
+					if (valid) {
+						_this.loading = true;
+						let detailId = _this.$route.params.id
+						if (detailId == undefined) {
+							detailId = ''
 						}
-					})
-					.then(function (response) {
-						if (response.data.success != 0) {
-							_this.loading = false;
-							_this.$Message.success({
-								content: response.data.info,
-								duration: 1
-							})
-							return;
+						let foodName = _this.formInline.foodName
+						let foodCode = _this.formInline.foodCode
+						let foodEnName = _this.formInline.foodEnName
+						let foodSize = _this.formInline.foodSize
+						let deadLine = _this.formInline.deadLine
+						let palce = _this.formInline.palce
+						let pic = _this.pic
+						let price = _this.formInline.price
+						let detail = _this.formInline.detail
+						let categoryName = _this.formInline.categoryName
+						let productsName = _this.formInline.productsName
+						let typeName = _this.formInline.typeName
+						let formData = new FormData();
+						for (let i = 0; i < _this.pic.length; i++) {
+							formData.append('files', _this.pic[i])
 						}
-						_this.loading = false;
-						_this.$Message.success({
-							content: response.data.info,
-							duration: 1
+						formData.append('id', detailId)
+						formData.append('foodName', foodName)
+						formData.append('foodCode', foodCode)
+						formData.append('foodEnName', foodEnName)
+						formData.append('foodSize', foodSize)
+						formData.append('deadLine', deadLine)
+						formData.append('categoryName', categoryName)
+						formData.append('productsName', productsName)
+						formData.append('typeName', typeName)
+						formData.append('palce', palce)
+						formData.append('price', price)
+						formData.append('detail', detail)
+						formData.forEach(function (item) {
+							console.log(item)
 						})
 
-					})
-					.catch(function (error) {});
+						_this.$axios.post(_this.apiUrl + '/article/uploadDetail', formData, {
+								headers: {
+									'Content-Type': 'multipart/form-data'
+								}
+							})
+							.then(function (response) {
+								if (response.data.success != 0) {
+									_this.loading = false;
+									_this.$Message.success({
+										content: response.data.info,
+										duration: 1
+									})
+									return;
+								}
+								_this.loading = false;
+								_this.$Message.success({
+									content: response.data.info,
+									duration: 1
+								})
+
+							})
+							.catch(function (error) {});
+					} else {
+						this.$Message.error('未填满');
+					}
+				})
+
 			},
 			onload: function () {
 				let _this = this
@@ -275,18 +342,18 @@
 						if (_this.$route.params.id == undefined || _this.$route.params.id == null || _this.$route.params.id == '') {} else {
 							for (let q = 0; q < detailList.length; q++) {
 								if (_this.$route.params.id == detailList[q].id) {
-									_this.foodName = detailList[q].name
-									_this.foodCode = detailList[q].code
-									_this.foodEnName = detailList[q].englishName
-									_this.foodSize = detailList[q].size
-									_this.deadLine = detailList[q].deadline
-									_this.palce = detailList[q].place
-									_this.pic = detailList[q].pic
-									_this.price = detailList[q].price
-									_this.detail = detailList[q].detail
-									_this.categoryName = detailList[q].categoryName
-									_this.productsName = detailList[q].productsName
-									_this.typeName = detailList[q].typeName
+									_this.formInline.foodName = detailList[q].name
+									_this.formInline.foodCode = detailList[q].code
+									_this.formInline.foodEnName = detailList[q].englishName
+									_this.formInline.foodSize = detailList[q].size
+									_this.formInline.deadLine = detailList[q].deadline
+									_this.formInline.palce = detailList[q].place
+									_this.formInline.pic = detailList[q].pic
+									_this.formInline.price = detailList[q].price
+									_this.formInline.detail = detailList[q].detail
+									_this.formInline.categoryName = detailList[q].categoryName
+									_this.formInline.productsName = detailList[q].productsName
+									_this.formInline.typeName = detailList[q].typeName
 								}
 							}
 
@@ -308,8 +375,8 @@
 			this.onload();
 			this.loadChangData();
 		},
-		create(){
-			
+		create() {
+
 		},
 		beforeCreate() {
 

@@ -83,12 +83,12 @@ export default {
                         {'Content-Type': 'application/json'})
                         .then(function (response) {
                             if(!response.data.sucess){
-                                alert(response.data.info)
+                                _this.$Message.error(response.data.info)
                                 return;
                             }
                             sessionStorage.setItem('token',response.data.token);
-                            console.log(response.data.name)
                             sessionStorage.setItem('username',response.data.name)
+                             _this.$Message.success('登录成功')
                             _this.$router.push({
                                  name: 'home_index'
                         });

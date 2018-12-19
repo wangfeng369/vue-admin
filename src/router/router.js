@@ -62,7 +62,8 @@ export const otherRouter = {
         { path: 'shopping', title: '购物详情', name: 'shopping', component: resolve => { require(['@/views/advanced-router/component/shopping-info.vue'], resolve); } }, // 用于展示带参路由
         { path: 'message', title: '消息中心', name: 'message_index', component: resolve => { require(['@/views/message/message.vue'], resolve); } },
         { path: 'foodUpload', title: {i18n: '新增商品详情'}, name: 'upload_index', component: resolve => { require(['@/views/foodUpload/foodUpload.vue'], resolve); } },
-        { path: 'foodUpload', title: {i18n: '修改商品详情'}, name: 'change_detail', component: resolve => { require(['@/views/foodUpload/foodUpload.vue'], resolve); } }
+        { path: 'foodUpload', title: {i18n: '修改商品详情'}, name: 'change_detail', component: resolve => { require(['@/views/foodUpload/foodUpload.vue'], resolve); } },
+        { path: 'imageUpload', title: {i18n: '上传背景'}, name: 'upload_bg', component: resolve => { require(['@/views/items/uploadBg.vue'], resolve); } }
     ]
 };
 
@@ -70,7 +71,7 @@ export const otherRouter = {
 export const appRouter = [
     {
         path: '/tableDetail',
-        icon: 'earth',
+        icon: 'ios-grid-view',
         title: {i18n: '商品列表'},
         name: 'tableDetail',
         component: Main,
@@ -85,7 +86,17 @@ export const appRouter = [
         // children: [
         //     { path: 'index', title: {i18n: '上传商品详情'}, name: 'international_index', component: resolve => { require(['@/views/foodUpload/foodUpload.vue'], resolve); } }
         // ]
-    }
+    },
+    {
+        path: '/uploadBg',
+        icon: 'earth',
+        title: {i18n: '基本信息'},
+        name: 'uploadBg',
+        component: Main,
+        children: [
+            { path: 'index', title: {i18n: '基本信息'}, name: 'uploadBg_index', component: resolve => { require(['@/views/items/uploadBg.vue'], resolve); } }
+        ]
+    },
     // {
     //     path: '/access',
     //     icon: 'key',
