@@ -66,18 +66,18 @@
 						<Input v-model="formInline.detail" type="textarea" icon="android-list" />
 					</FormItem>
 				</Form>
-					<Col span="24">
-					<Button type="primary" :loading="loading" @click="uploadDetail('formInline')" style="margin:20px auto;display: inherit;width:100px;">
-						<span v-if="!loading">提交</span>
-						<span v-else>Loading...</span>
-					</Button>
-					</Col>
+
 			</Card>
 			</Col>
 			<Col span="12">
 			<imageCroper @getPic="getPic" @getOldPic="getOldPic" :changePic='pic'></imageCroper>
 			</Col>
-		
+			<Col span="24">
+			<Button type="primary" :loading="loading" @click="uploadDetail('formInline')" style="margin:20px auto;display: inherit;width:100px;">
+				<span v-if="!loading">提交</span>
+				<span v-else>Loading...</span>
+			</Button>
+			</Col>
 
 		</Row>
 	</div>
@@ -180,41 +180,7 @@
 			imageCroper: imageCroper
 		},
 		methods: {
-			// handleArticletitleBlur() {
-			// 	if (this.foodName.length !== 0) {} else {
-			// 		this.$Message.error("商品名称不可为空哦");
-			// 	}
-			// },
-			// tiaoxingmaBlur() {
-			// 	if (this.foodCode.length !== 0) {} else {
-			// 		this.$Message.error("条形码不可为空哦");
-			// 	}
-			// },
-			// guigeBlur() {
-			// 	if (this.foodCode.length !== 0) {} else {
-			// 		this.$Message.error("规格不可为空哦");
-			// 	}
-			// },
-			// baozhiqiBlur() {
-			// 	if (this.deadLine.length !== 0) {} else {
-			// 		this.$Message.error("保质期不可为空哦");
-			// 	}
-			// },
-			// changdiBlur() {
-			// 	if (this.palce.length !== 0) {} else {
-			// 		this.$Message.error("产地不可为空哦");
-			// 	}
-			// },
-			// priceBlur() {
-			// 	if (this.price.length !== 0) {} else {
-			// 		this.$Message.error("价格不可为空哦");
-			// 	}
-			// },
-			// detailBlur() {
-			// 	if (this.detail.length !== 0) {} else {
-			// 		this.$Message.error("描述不可为空哦");
-			// 	}
-			// },
+
 			toLoading() {
 
 			},

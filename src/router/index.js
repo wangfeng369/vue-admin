@@ -15,8 +15,9 @@ const RouterConfig = {
 
 export const router = new VueRouter(RouterConfig);
 
-// router.beforeEach((to, from, next) => {
-//     iView.LoadingBar.start();
+router.beforeEach((to, from, next) => {
+    iView.LoadingBar.start();
+    next();
 //     Util.title(to.meta.title);
 //     if (Cookies.get('locking') === '1' && to.name !== 'locking') { // 判断当前是否是锁定状态
 //         next({
@@ -51,7 +52,7 @@ export const router = new VueRouter(RouterConfig);
 //             }
 //         }
 //     }
-// });
+});
 
 router.afterEach((to) => {
     Util.openNewPage(router.app, to.name, to.params, to.query);

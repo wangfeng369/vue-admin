@@ -18,7 +18,7 @@ Vue.use(VueI18n);
 Vue.use(iView);
 Vue.prototype.$axios = axios;
 Vue.prototype.imgUrl = 'http://120.79.213.80:1000/images/'
-const debug = true
+const debug = false
 Vue.prototype.apiUrl = debug ? 'http://localhost:8888' : 'http://120.79.213.80:8888';
 
 
