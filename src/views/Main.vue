@@ -1,6 +1,13 @@
 <style lang="less">
     @import "./main.less";
 </style>
+<style>
+    .zoomIn-enter-active {
+    animation: fadeInRight .8s;
+    }
+   @keyframes fadeInRight{0%{opacity:0;-webkit-transform:translateX(20px);-ms-transform:translateX(20px);transform:translateX(20px)}100%{opacity:1;-webkit-transform:translateX(0);-ms-transform:translateX(0);transform:translateX(0)}}
+</style>
+
 <template>
     <div class="main" :class="{'main-hide-text': shrink}">
         <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
@@ -58,9 +65,11 @@
         </div>
         <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
             <div class="single-page">
-                <keep-alive :include="cachePage">
-                    <router-view></router-view>
-                </keep-alive>
+                 <transition name="zoomIn">
+                    <keep-alive :include="cachePage">
+                        <router-view></router-view>
+                    </keep-alive>
+                 </transition>
             </div>
         </div>
     </div>
